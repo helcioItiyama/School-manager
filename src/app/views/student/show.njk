@@ -1,0 +1,54 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+        <title>Cadastro Alunos</title>
+    {% endblock %}
+
+    n{% block content %}
+
+        <div class="card">
+        
+            <section style="background: url({{student.avatar_url}}) no-repeat center center/ cover" 
+            class="image"></section>
+
+            <section class="details">
+
+                <h3>Aluno</h3>
+
+                <div class = "item">
+                    <div>Nome Completo</div>
+                    <div>{{student.name}}</div>
+                </div>
+
+                <div class= "item">
+                    <div>Email</div>
+                    <div>{{student.email}}</div>
+                </div>
+
+                <div class= "item">
+                    <div>Data de Aniversário</div>
+                    <div>{{student.birth}}</div>
+                </div>
+
+                <div class= "item">
+                    <div>Ano Escolar</div>
+                    <div>{{student.school_year}}</div>
+                </div>
+
+                <div class="item">
+                    <div>Carga Horária Semanal (horas)</div>
+                    <div>{{student.course_load}}</div>
+                </div>
+
+                <div class="item">
+                    <div>Aluno de</div>
+                    <div>{{student.teacher_name}}</div>
+                </div>
+
+                <a href="/student/{{student.id}}/edit" class="button">Editar</a>
+
+            </section>
+
+        </div>
+
+    {% endblock content %}

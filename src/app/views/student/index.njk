@@ -1,0 +1,56 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+        <title>Cadastro Alunos</title>
+    {% endblock %}
+
+    {% block content %}
+
+        <div class="card table-container student">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <th>Nome Completo</th>
+                        <th>Professor</th>
+                        <th>Ano Escolar</th>
+                        <th>Action</th>       
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>
+                            <span style="background-image: url({{student.avatar_url}})"></span>
+                            {{student.name}}
+                        </td>
+                        <td>{{student.teachers_name}}</td>
+                        <td>{{student.school_year}}</td>
+                        <td><a href="/student/{{student.id}}">ver</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+             <div class="pagination"
+                data-page="{{pagination.page}}"
+                data-total="{{pagination.total}}"
+                data-filter="{{filter}}">
+            </div>
+
+            <div class="header">
+                <a class="new_member" href="/student/create">Adicionar Aluno</a>
+                
+                <form action="/student" method="get">
+                    <input 
+                        type="text"
+                        name="filter"
+                        value="{{filter}}"
+                        placeholder="Filtrar por professor ou curso"
+                    >
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
+        </div>
+
+    {% endblock content %}

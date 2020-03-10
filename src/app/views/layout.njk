@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        {% block head %}
+            <title>Nada</title>
+        {% endblock %}
+        
+        <link rel="stylesheet" href="/style.css">
+
+    </head>
+    
+    <body>
+        <header>
+            <div class = "links">
+                <a href="/instructor">Professores</a>
+                <a href="/student">Alunos</a>
+            </div>
+            
+        </header>
+
+        {% block content %} {% endblock %}
+
+        <footer>
+            <div id="footer" class="links">
+                <a href="https://github.com/academy" target="_blank">Github</a>
+                <a href="https://www.instagram.com/academy_oficial/" target="_blank">Intagram</a>
+                <a href="https://www.facebook.com/academy" target="_blank">Facebook</a>
+            </div>
+            
+        </footer>
+
+        <script src="/scripts.js"></script>
+    </body>
+</html>

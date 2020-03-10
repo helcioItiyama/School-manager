@@ -1,0 +1,56 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+        <title>Cadastro Professores</title>
+    {% endblock %}
+
+    n{% block content %}
+
+        <div class="card table-container">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <th>Nome Completo</th>
+                        <th>Cursos</th>
+                        <th>Ação</th>       
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for teacher in teachers %}
+                    <tr>
+                        <td>
+                            <span style="background-image: url({{teacher.avatar_url}})"></span>
+                            {{teacher.name}}
+                        </td>
+                        <div class="course">
+                        <td>{{teacher.subjectstaught}}</td>
+                        </div> 
+                        <td><a href="/instructor/{{teacher.id}}">ver</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination"
+                data-page="{{pagination.page}}"
+                data-total="{{pagination.total}}"
+                data-filter="{{filter}}">
+            </div>
+
+            <div class="header">
+                <a class="new_member" href="/instructor/create">Adicionar Professor</a>
+                
+                <form action="/instructor" method="get">
+                    <input 
+                        type="text"
+                        name="filter"
+                        value="{{filter}}"
+                        placeholder="Filtrar por professor ou curso"
+                    >
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
+        </div>
+
+    {% endblock content %}

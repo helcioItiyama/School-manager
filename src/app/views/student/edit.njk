@@ -1,0 +1,45 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+        <title>Cadastro Alunos</title>
+    {% endblock %}
+
+{% block content %}
+
+    <div class="card">
+
+        <section style="background: url({{student.avatar_url}}) no-repeat center center/ cover" 
+            class="image">
+        </section>
+
+        <section class="details">
+
+            <form  method="POST" action="/student?_method=PUT">
+
+                <h3>Aluno</h3>
+
+                {% include "student/fields.njk" %}
+
+                <input type="hidden" name="id" value="{{student.id}}">
+            
+            </form>
+
+            <form id="delete" action="/student?_method=DELETE" method="post">
+                <input type="hidden" name="id" value="{{student.id}}">
+                <button type="submit">Deletar</button>
+            </form>
+
+            <script>
+                const formDelete = document.querySelector("#delete");
+
+                formDelete.addEventListener("submit", (event) => {
+                    const confirmation = confirm("Deseja deletar?");
+                    if (!confirmation) {
+                        event.preventDefault()
+                    }
+                });        
+            </script>
+        </section>
+    </div>
+
+{% endblock content %}
