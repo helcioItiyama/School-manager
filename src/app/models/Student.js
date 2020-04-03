@@ -1,7 +1,13 @@
 const db = require('../../config/db')
+const Base = require('./Base');
+
 const {date} = require('../../lib/utils');
 
+Base.init({table: 'students'});
+
 module.exports = {
+    ...Base,
+
     all(callback) {
         db.query(`
             SELECT students.*, teachers.name AS teachers_name
@@ -13,36 +19,6 @@ module.exports = {
         })
     },
 
-    create(data, callback) {
-        const query = `
-        INSERT INTO students (
-        name,
-        email,
-        birth,
-        school_year,
-        course_load,
-        avatar_url,
-        teacher_id
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING id`
-
-        const values = [
-            data.name,
-            data.email,
-            date(data.birth).iso,
-            data.school_year,
-            data.course_load,
-            data.avatar_url,
-            data.teacher
-        ]
-
-        db.query(query, values, (err, results) => {
-            if(err) throw `Database Error! ${err}`
-            callback(results.rows[0]);
-            
-        })
-    },
-
     find(id, callback) {
         db.query(`SELECT students.*, teachers.name AS teacher_name
         FROM students
@@ -50,44 +26,6 @@ module.exports = {
         WHERE students.id = $1`, [id], (err, results) => {
             if(err) throw `Database Error! ${err}`
             callback(results.rows[0])
-        })
-    },
-
-    update(data, callback) {
-        const query = `
-        UPDATE students SET
-            avatar_url = ($1),
-            name = ($2),
-            email = ($3),
-            birth = ($4),
-            school_year = ($5),
-            course_load = ($6),
-            teacher_id = ($7)
-        WHERE id = $8`
-
-        const value = [
-            data.avatar_url,
-            data.name,
-            data.email,
-            date(data.birth).iso,
-            data.school_year,
-            data.course_load,
-            data.teacher,
-            data.id
-        ]
-
-        db.query(query, value, (err, results) => {
-            if(err) throw `Data Error! ${err}`
-            callback()
-        })
-    },
-
-    delete(id, callback) {
-        db.query( `
-        DELETE FROM students
-        WHERE id = $1`, [id], (err, results) => {
-            if(err) throw `Data error! ${err}`
-            callback()
         })
     },
 

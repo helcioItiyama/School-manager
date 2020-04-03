@@ -49,7 +49,14 @@ module.exports = {
                 return res.send ("Please, fill all the fields")
             }
         }
-        Student.create(req.body, (student) => {
+
+        let {name, email, birth, school_year, course_load, avatar_url, teacher} = req.body;
+
+        birth = date(birth).iso;
+
+        Student.create({
+            name, email, birth, school_year, course_load, avatar_url, teacher_id:teacher
+        }, (student) => {
             return res.redirect(`student/${student.id}`)
         })
     },
@@ -80,7 +87,17 @@ module.exports = {
                 return res.send ("Please, fill all the fields")
             }
         }
-        Student.update(req.body, () => {
+        let {avatar_url, name, email, birth, school_year, course_load, teacher} = req.body;
+
+        Student.update(req.body.id, {
+            avatar_url,
+            name,
+            email,
+            birth: date(birth).iso,
+            school_year,
+            course_load,
+            teacher_id: teacher
+        }, () => {
             return res.redirect(`student/${req.body.id}`)
         })
     },

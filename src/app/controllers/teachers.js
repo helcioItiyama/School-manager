@@ -44,7 +44,17 @@ module.exports = {
                 return res.send ("Please, fill all the fields")
             }
         }
-        Teacher.create(req.body, (teacher) => {
+        let {name, birthdate, educationlevel, classtype, subjectstaught, avatar_url} = req.body;
+
+        Teacher.create({
+            name,
+            birthdate: date(birthdate).iso,
+            educationlevel,
+            classtype,
+            subjectstaught,
+            created_at: date(Date.now()).iso,
+            avatar_url
+        }, (teacher) => {
             return res.redirect(`instructor/${teacher.id}`)
         })
     },
@@ -75,7 +85,16 @@ module.exports = {
                 return res.send ("Please, fill all the fields")
             }
         }
-        Teacher.update(req.body, () => {
+        let {avatar_url, name, birthdate, educationlevel, classtype, subjectstaught} = req.body;
+
+        Teacher.update(req.body.id, {
+            avatar_url,
+            name,
+            birthdate: date(birthdate).iso,
+            educationlevel,
+            classtype,
+            subjectstaught
+        }, () => {
             return res.redirect(`instructor/${req.body.id}`)
         })
     },
